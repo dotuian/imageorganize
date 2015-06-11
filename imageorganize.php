@@ -43,12 +43,12 @@ class ImageOrganize {
                     if (!isset($exif['DateTime'])) {
                         echo "[NG] | this images has not createtime information. " . PHP_EOL;
 
-						$stat = stat($file);
-						//echo date('Y.m.d', $stat['atime']) . PHP_EOL; // 访问日期
-						//echo date('Y.m.d', $stat['mtime']) . PHP_EOL;  // 更新日期
-						//echo date('Y.m.d', $stat['ctime']) . PHP_EOL;  // 创建日期
+                        $stat = stat($file);
+                        //echo date('Y.m.d', $stat['atime']) . PHP_EOL; // 访问日�?
+                        //echo date('Y.m.d', $stat['mtime']) . PHP_EOL;  // 更新日�?
+                        //echo date('Y.m.d', $stat['ctime']) . PHP_EOL;  // 创建日�?
 
-						$subfolder = date('Y.m.d', $stat['mtime']);
+                        $subfolder = date('Y.m.d', $stat['mtime']);
                         
                     } else {
 	                    // folder format : YYYY.MM.DD
