@@ -33,7 +33,7 @@ class ImageOrganize {
         foreach ($files as $key => $file) {
             if (file_exists($file)) {
 
-                if (exif_imagetype($file) === IMAGETYPE_JPEG || true) { // 任意文件
+                if (exif_imagetype($file) === IMAGETYPE_JPEG || true) { // 所有文件
 
                     echo "=======================" . PHP_EOL;
                     echo "file : $file" . PHP_EOL;
@@ -44,9 +44,9 @@ class ImageOrganize {
                         echo "[NG] | this images has not createtime information. " . PHP_EOL;
 
                         $stat = stat($file);
-                        //echo date('Y.m.d', $stat['atime']) . PHP_EOL; // 访问日�?
-                        //echo date('Y.m.d', $stat['mtime']) . PHP_EOL;  // 更新日�?
-                        //echo date('Y.m.d', $stat['ctime']) . PHP_EOL;  // 创建日�?
+                        //echo date('Y.m.d', $stat['atime']) . PHP_EOL; //  访问日期
+                        //echo date('Y.m.d', $stat['mtime']) . PHP_EOL;  // 更新日期
+                        //echo date('Y.m.d', $stat['ctime']) . PHP_EOL;  // 创建日期
 
                         $subfolder = date('Y.m.d', $stat['mtime']);
                         
