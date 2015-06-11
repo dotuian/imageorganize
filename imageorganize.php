@@ -11,7 +11,7 @@ class ImageOrganize {
         $this->output = $output;
     }
 
-    private function find_all_files($dir) {
+    public function find_all_files($dir) {
         $root = scandir($dir);
         foreach ($root as $value) {
             if ($value === '.' || $value === '..') {
@@ -21,7 +21,7 @@ class ImageOrganize {
                 $result[] = "$dir/$value";
                 continue;
             }
-            foreach (find_all_files("$dir/$value") as $value) {
+            foreach ($this->find_all_files("$dir/$value") as $value) {
                 $result[] = $value;
             }
         }
@@ -33,7 +33,7 @@ class ImageOrganize {
         foreach ($files as $key => $file) {
             if (file_exists($file)) {
 
-                if (exif_imagetype($file) === IMAGETYPE_JPEG) {
+                if (exif_imagetype($file) === IMAGETYPE_JPEG || true) { // 任意文件
 
                     echo "=======================" . PHP_EOL;
                     echo "file : $file" . PHP_EOL;
@@ -42,12 +42,19 @@ class ImageOrganize {
 
                     if (!isset($exif['DateTime'])) {
                         echo "[NG] | this images has not createtime information. " . PHP_EOL;
-                        continue;
-                    }
 
-                    // folder format : YYYY.MM.DD
-                    $subfolder = substr($exif['DateTime'], 0, 10);
-                    $subfolder = str_replace(":", ".", $subfolder);
+						$stat = stat($file);
+						//echo date('Y.m.d', $stat['atime']) . PHP_EOL; // 访问日期
+						//echo date('Y.m.d', $stat['mtime']) . PHP_EOL;  // 更新日期
+						//echo date('Y.m.d', $stat['ctime']) . PHP_EOL;  // 创建日期
+
+						$subfolder = date('Y.m.d', $stat['mtime']);
+                        
+                    } else {
+	                    // folder format : YYYY.MM.DD
+	                    $subfolder = substr($exif['DateTime'], 0, 10);
+	                    $subfolder = str_replace(":", ".", $subfolder);
+                    }
 
                     // if folder not exsit ,create folder 
                     if (!file_exists($output . $subfolder)) {
@@ -85,8 +92,8 @@ class ImageOrganize {
 
 }
 
-$input = "E:/BaiduYunDownload";
-$output = "E:/img/";
+$input = "D:/001/";
+$output = "D:/002/";
 
 $obj = new ImageOrganize($input, $output);
 $obj->run();
